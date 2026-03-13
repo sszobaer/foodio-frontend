@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------
+   CSS VARIABLES (DESIGN TOKENS)
+------------------------------ */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+:root {
+
+  /* COLORS */
+  --primary: #1A3C34;
+  --primary-hover: #16352e;
+
+  --background: #F7F6F3;
+  --card: #F1ECE5;
+  --white: #ffffff;
+
+  --text-heading: #1A3C34;
+  --text-body: #2E2E2E;
+  --text-muted: #6B6B6B;
+
+  --border: #E6E1DA;
+
+  --success: #1E9E62;
+  --warning: #F2C94C;
+  --danger: #EB5757;
+
+  /* RADIUS */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* SHADOW */
+  --shadow-card: 0px 10px 30px rgba(0,0,0,0.06);
+
+  /* CONTAINER */
+  --container: 1280px;
+
+}
+
+/* -----------------------------
+   BASE STYLES
+------------------------------ */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--background);
+  font-family: var(--font-body);
+  color: var(--text-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* -----------------------------
+   TYPOGRAPHY
+------------------------------ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 54px;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.05em;
+}
+
+/* Body */
+
+body {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+}
+
+/* -----------------------------
+   LAYOUT
+------------------------------ */
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* -----------------------------
+   BUTTON BASE
+------------------------------ */
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+/* -----------------------------
+   CARD
+------------------------------ */
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* -----------------------------
+   INPUT
+------------------------------ */
+
+.input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 16px;
+}
+
+/* -----------------------------
+   MODAL
+------------------------------ */
+
+.modal {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+}
+
+/* -----------------------------
+   SCROLLBAR
+------------------------------ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d8d3cb;
+  border-radius: 10px;
+}
