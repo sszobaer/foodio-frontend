@@ -1,15 +1,24 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import AuthInput from "./AuthInput";
 import {
   registerSchema,
-  RegisterFormData,
+  type RegisterFormData,
 } from "@/schemas/auth/register.schema";
+import { registerUser } from "@/services/auth/auth.service";
+import { showSuccessToast, showErrorToast } from "@/lib/toast";
 
 export default function RegisterForm() {
+  const router = useRouter();
+  const [serverError, setServerError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -24,8 +33,24 @@ export default function RegisterForm() {
     },
   });
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log("Register data:", data);
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      setServerError("");
+      setSuccessMessage("");
+      setIsSubmittingForm(true);
+
+      const response = await registerUser(data);
+
+      showSuccessToast("Account created successfully!");
+
+      setTimeout(() => {
+        router.push("/sign-in");
+      }, 800);
+    } catch (error) {
+      showErrorToast("Email already exists!");
+    } finally {
+      setIsSubmittingForm(false);
+    }
   };
 
   return (
@@ -66,8 +91,39 @@ export default function RegisterForm() {
         {...register("password")}
       />
 
+      {serverError ? (
+        <p
+          style={{
+            margin: 0,
+            fontFamily: "Manrope",
+            fontWeight: 500,
+            fontSize: "12px",
+            lineHeight: "14px",
+            color: "#E53935",
+          }}
+        >
+          {serverError}
+        </p>
+      ) : null}
+
+      {successMessage ? (
+        <p
+          style={{
+            margin: 0,
+            fontFamily: "Manrope",
+            fontWeight: 500,
+            fontSize: "12px",
+            lineHeight: "14px",
+            color: "#078834",
+          }}
+        >
+          {successMessage}
+        </p>
+      ) : null}
+
       <button
         type="submit"
+        disabled={isSubmittingForm}
         style={{
           width: "398px",
           height: "36px",
@@ -80,10 +136,11 @@ export default function RegisterForm() {
           lineHeight: "14px",
           letterSpacing: "-0.15px",
           color: "#FFFFFF",
-          cursor: "pointer",
+          cursor: isSubmittingForm ? "not-allowed" : "pointer",
+          opacity: isSubmittingForm ? 0.7 : 1,
         }}
       >
-        Create Account
+        {isSubmittingForm ? "Creating..." : "Create Account"}
       </button>
     </form>
   );

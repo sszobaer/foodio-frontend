@@ -9,13 +9,15 @@ export default function AuthSwitch() {
 
   return (
     <div
-      className="mb-8 grid grid-cols-2 items-center"
+      className="grid grid-cols-2 items-center"
       style={{
         width: "398px",
         height: "36px",
         borderRadius: "16px",
         background: "#F4F0E8",
         padding: "3.5px",
+        marginBottom: "24px",
+        boxSizing: "border-box",
       }}
     >
       <Link

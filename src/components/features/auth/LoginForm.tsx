@@ -1,12 +1,23 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import AuthInput from "./AuthInput";
-import { loginSchema, LoginFormData } from "@/schemas/auth/login.schema";
+import { loginSchema, type LoginFormData } from "@/schemas/auth/login.schema";
+import { getMe, loginUser } from "@/services/auth/auth.service";
+import { useAuth } from "@/context/AuthProvider";
+import { showErrorToast, showSuccessToast } from "@/lib/toast";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { refreshUser } = useAuth();
+
+  const [serverError, setServerError] = useState("");
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -19,9 +30,28 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log("Login data:", data);
-  };
+const onSubmit = async (data: LoginFormData) => {
+  try {
+    setServerError("");
+    setIsSubmittingForm(true);
+
+    await loginUser(data);
+    showSuccessToast("Login Successful!");
+
+    const me = await refreshUser();
+
+    if (me?.role === "ADMIN") {
+      router.push("/admin");
+    } else {
+      router.push("/");
+    }
+  } catch (error) {
+    showErrorToast("Invalid Credentials");
+  } finally {
+    setIsSubmittingForm(false);
+  }
+};
+
 
   return (
     <form
@@ -47,8 +77,24 @@ export default function LoginForm() {
         {...register("password")}
       />
 
+      {serverError ? (
+        <p
+          style={{
+            margin: 0,
+            fontFamily: "Manrope",
+            fontWeight: 500,
+            fontSize: "12px",
+            lineHeight: "14px",
+            color: "#E53935",
+          }}
+        >
+          {serverError}
+        </p>
+      ) : null}
+
       <button
         type="submit"
+        disabled={isSubmittingForm}
         style={{
           width: "398px",
           height: "36px",
@@ -61,10 +107,11 @@ export default function LoginForm() {
           lineHeight: "14px",
           letterSpacing: "-0.15px",
           color: "#FFFFFF",
-          cursor: "pointer",
+          cursor: isSubmittingForm ? "not-allowed" : "pointer",
+          opacity: isSubmittingForm ? 0.7 : 1,
         }}
       >
-        Sign In
+        {isSubmittingForm ? "Signing In..." : "Sign In"}
       </button>
     </form>
   );
