@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import AuthInput from "./AuthInput";
 import { loginSchema, type LoginFormData } from "@/schemas/auth/login.schema";
-import { getMe, loginUser } from "@/services/auth/auth.service";
+import { loginUser } from "@/services/auth/auth.service";
 import { useAuth } from "@/context/AuthProvider";
 import { showErrorToast, showSuccessToast } from "@/lib/toast";
+import { setAccessToken } from "@/utils/cookies";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -30,28 +31,34 @@ export default function LoginForm() {
     },
   });
 
-const onSubmit = async (data: LoginFormData) => {
-  try {
-    setServerError("");
-    setIsSubmittingForm(true);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setServerError("");
+      setIsSubmittingForm(true);
 
-    await loginUser(data);
-    showSuccessToast("Login Successful!");
+      const res = await loginUser(data);
 
-    const me = await refreshUser();
+      if (res?.accessToken) {
+        setAccessToken(res.accessToken);
+      }
 
-    if (me?.role === "ADMIN") {
-      router.push("/admin");
-    } else {
-      router.push("/");
+      showSuccessToast("Login Successful!");
+
+      const me = await refreshUser();
+
+      if (me?.role === "ADMIN") {
+        router.replace("/admin");
+        router.refresh();
+      } else {
+        router.push("/");
+      }
+    } catch (error) {
+      setServerError("Invalid credentials");
+      showErrorToast("Invalid Credentials");
+    } finally {
+      setIsSubmittingForm(false);
     }
-  } catch (error) {
-    showErrorToast("Invalid Credentials");
-  } finally {
-    setIsSubmittingForm(false);
-  }
-};
-
+  };
 
   return (
     <form

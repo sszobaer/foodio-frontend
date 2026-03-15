@@ -1,32 +1,26 @@
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import type { MeResponse } from "@/types/auth.type";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-if (!API_BASE_URL) {
-  throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
-}
+export async function getServerMe() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
 
-export async function getServerMe(): Promise<MeResponse | null> {
-  try {
-    const headerStore = await headers();
-    const cookieHeader = headerStore.get("cookie") ?? "";
+  if (!token) return null;
 
-    const res = await fetch(`${API_BASE_URL}/auth/me`, {
-      method: "GET",
-      headers: {
-        Cookie: cookieHeader,
-      },
-      cache: "no-store",
-    });
+  const res = await fetch(`${API_BASE_URL}/auth/me`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
 
-    if (!res.ok) return null;
+  if (!res.ok) return null;
 
-    return (await res.json()) as MeResponse;
-  } catch {
-    return null;
-  }
+  return res.json();
 }
 
 export async function requireAdmin() {

@@ -12,6 +12,7 @@ import {
 
 import { getMe, logoutUser } from "@/services/auth/auth.service";
 import type { MeResponse } from "@/types/auth.type";
+import { removeAccessToken } from "@/utils/cookies";
 
 interface AuthContextType {
   user: MeResponse | null;
@@ -41,15 +42,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const logout = useCallback(async () => {
-    try {
-      await logoutUser();
-    } catch (error) {
-      console.error("Logout failed:", error);
-    } finally {
-      setUser(null);
-    }
-  }, []);
+const logout = useCallback(async () => {
+  try {
+    await logoutUser();
+  } catch (error) {
+    console.error("Logout failed:", error);
+  } finally {
+    removeAccessToken();
+    setUser(null);
+  }
+}, []);
+
 
   useEffect(() => {
     refreshUser();
