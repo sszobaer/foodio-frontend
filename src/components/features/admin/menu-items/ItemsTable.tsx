@@ -2,13 +2,21 @@
 
 import { useMemo, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import AdminDataTable, {
   type AdminTableColumn,
 } from "@/components/features/admin/shared/AdminDataTable";
 import AvailabilityBadge from "@/components/features/admin/shared/AvailabilityBadge";
 import MenuItemModal from "@/components/features/admin/menu-items/ItemModal";
-import type { AdminCategory, AdminMenuItem } from "@/types/admin/menu-item.type";
+
+import { deleteMenuItem } from "@/services/admin/delete-menu-item.service";
+
+import type {
+  AdminCategory,
+  AdminMenuItem,
+} from "@/types/admin/menu-item.type";
 
 interface Props {
   menuItems: AdminMenuItem[];
@@ -18,6 +26,8 @@ interface Props {
 export default function MenuItemsTable({ menuItems, categories }: Props) {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<AdminMenuItem | null>(null);
+
+  const router = useRouter();
 
   const columns: AdminTableColumn<AdminMenuItem>[] = useMemo(
     () => [
@@ -47,6 +57,7 @@ export default function MenuItemsTable({ menuItems, categories }: Props) {
         className: "w-[110px]",
         render: (row) => (
           <div className="flex items-center gap-3">
+            {/* Edit */}
             <button
               type="button"
               onClick={() => {
@@ -58,8 +69,29 @@ export default function MenuItemsTable({ menuItems, categories }: Props) {
               <Pencil className="h-4 w-4" strokeWidth={1.8} />
             </button>
 
+            {/* Delete */}
             <button
               type="button"
+              onClick={async () => {
+                const confirmDelete = confirm(
+                  "Are you sure you want to delete this menu item?"
+                );
+
+                if (!confirmDelete) return;
+
+                try {
+                  await deleteMenuItem(row.id);
+
+                  toast.success("Menu item deleted successfully");
+
+                  router.refresh();
+                } catch (error: any) {
+                  toast.error(
+                    error?.response?.data?.message ||
+                      "Failed to delete menu item"
+                  );
+                }
+              }}
               className="text-[#F04438] transition hover:opacity-80"
             >
               <Trash2 className="h-4 w-4" strokeWidth={1.8} />
@@ -68,7 +100,7 @@ export default function MenuItemsTable({ menuItems, categories }: Props) {
         ),
       },
     ],
-    []
+    [router]
   );
 
   return (
