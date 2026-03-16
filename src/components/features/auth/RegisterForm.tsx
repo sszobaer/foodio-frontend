@@ -11,7 +11,7 @@ import {
   type RegisterFormData,
 } from "@/schemas/auth/register.schema";
 import { registerUser } from "@/services/auth/auth.service";
-import { showSuccessToast, showErrorToast } from "@/lib/toast";
+import { showSuccessToast, showErrorToast } from "@/components/ui/toast";
 
 export default function RegisterForm() {
   const router = useRouter();

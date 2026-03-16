@@ -1,60 +1,14 @@
-import { Pencil, Trash2 } from "lucide-react";
-
+import AddItemButton from "@/components/features/admin/menu-items/AddItemButton";
+import MenuItemsTable from "@/components/features/admin/menu-items/ItemsTable";
 import MenuTabs from "@/components/features/admin/menu-items/MenuTabs";
-import AdminDataTable, {
-  type AdminTableColumn,
-} from "@/components/features/admin/shared/AdminDataTable";
-import AvailabilityBadge from "@/components/features/admin/shared/AvailabilityBadge";
+import { getAdminCategories } from "@/services/admin/get-admin-categories.service";
 import { getAdminMenuItems } from "@/services/admin/get-admin-menu-items.service";
-import type { AdminMenuItem } from "@/types/admin/menu-item.type";
-
-const columns: AdminTableColumn<AdminMenuItem>[] = [
-  {
-    key: "name",
-    header: "Name",
-    render: (row) => row.name,
-  },
-  {
-    key: "category",
-    header: "Category",
-    render: (row) => row.category?.name ?? "-",
-  },
-  {
-    key: "price",
-    header: "Price",
-    render: (row) => `$${Number(row.price).toFixed(2)}`,
-  },
-  {
-    key: "status",
-    header: "Status",
-    render: (row) => <AvailabilityBadge active={row.isAvailable} />,
-  },
-  {
-    key: "actions",
-    header: "Actions",
-    className: "w-[110px]",
-    render: () => (
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          className="text-[#8A8A8A] transition hover:text-[#17352D]"
-        >
-          <Pencil className="h-4 w-4" strokeWidth={1.8} />
-        </button>
-
-        <button
-          type="button"
-          className="text-[#F04438] transition hover:opacity-80"
-        >
-          <Trash2 className="h-4 w-4" strokeWidth={1.8} />
-        </button>
-      </div>
-    ),
-  },
-];
 
 export default async function AdminMenuItemsPage() {
-  const menuItems = await getAdminMenuItems();
+  const [menuItems, categories] = await Promise.all([
+    getAdminMenuItems(),
+    getAdminCategories(),
+  ]);
 
   return (
     <div className="px-5 pt-4">
@@ -64,22 +18,13 @@ export default async function AdminMenuItemsPage() {
         </h1>
       </div>
 
-      <div className="mb-3 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">       
-         <MenuTabs value="menu-items" />
-
-        <button className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-[#17352D] px-4 text-[14px] font-medium leading-5 tracking-[-0.15px] text-white whitespace-nowrap">
-          <span className="text-[16px] leading-none">+</span>
-          Add Item
-        </button>
+      <div className="mb-3 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <MenuTabs value="menu-items" />
+        <AddItemButton categories={categories} />
       </div>
 
       <div className="max-w-[1128px]">
-        <AdminDataTable
-          columns={columns}
-          data={menuItems}
-          rowKey={(row) => row.id}
-          emptyText="No menu items found."
-        />
+        <MenuItemsTable menuItems={menuItems} categories={categories} />
       </div>
     </div>
   );

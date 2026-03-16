@@ -8,7 +8,7 @@ import AuthInput from "./AuthInput";
 import { loginSchema, type LoginFormData } from "@/schemas/auth/login.schema";
 import { loginUser } from "@/services/auth/auth.service";
 import { useAuth } from "@/context/AuthProvider";
-import { showErrorToast, showSuccessToast } from "@/lib/toast";
+import { showErrorToast, showSuccessToast } from "@/components/ui/toast";
 import { setAccessToken } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
 

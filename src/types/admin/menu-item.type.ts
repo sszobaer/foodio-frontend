@@ -21,3 +21,33 @@ export interface AdminMenuItem {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CreateAdminMenuItemPayload {
+  categoryId: string;
+  name: string;
+  description: string;
+  price: string;
+  isAvailable: boolean;
+  isActive?: boolean;
+  image?: File | null;
+}
+
+export interface CreateAdminMenuItemResponse {
+  id: string;
+  message: string;
+}
+
+export interface UpdateAdminMenuItemPayload {
+  categoryId: string;
+  name: string;
+  description: string;
+  price: string;
+  isAvailable: boolean;
+  isActive?: boolean;
+  image?: File | null;
+}
+
+export interface UpdateAdminMenuItemResponse {
+  id: string;
+  message: string;
+}
