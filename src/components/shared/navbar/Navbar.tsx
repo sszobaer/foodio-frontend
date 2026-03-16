@@ -2,18 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, UserRound } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import NavLink from "./NavLink";
 import CartButton from "./CartButton";
 import ProfileDropdown from "./ProfileDropdown";
 import { useAuth } from "@/context/AuthProvider";
+import { useCart } from "@/context/CartProvider";
 
 export default function Navbar() {
   const { isAuthenticated, isLoading } = useAuth();
+  const { itemCount, openCart } = useCart();
 
   return (
-    <header className="w-full bg-transparent">
+    <header className="fixed top-0 left-0 z-50 w-full mb-10 bg-transparent">
       <div className="mx-auto flex h-[96px] max-w-[1280px] items-center justify-between px-6">
         <Link
           href="/"
@@ -49,7 +51,9 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <CartButton count={2} />
+          {!isLoading && isAuthenticated ? (
+            <CartButton count={itemCount} onClick={openCart} />
+          ) : null}
 
           {isLoading ? null : isAuthenticated ? (
             <ProfileDropdown />

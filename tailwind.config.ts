@@ -17,8 +17,9 @@ const config: Config = {
       },
 
       fontFamily: {
-        body: ["var(--font-body)"],
+        body: ["var(--font-manrope)"],
         heading: ["var(--font-heading)"],
+        playfair: ["var(--font-playfair)"],
       },
 
       container: {
