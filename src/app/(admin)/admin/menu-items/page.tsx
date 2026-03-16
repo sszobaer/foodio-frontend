@@ -5,7 +5,7 @@ import AdminDataTable, {
   type AdminTableColumn,
 } from "@/components/features/admin/shared/AdminDataTable";
 import AvailabilityBadge from "@/components/features/admin/shared/AvailabilityBadge";
-import { getAdminMenuItems } from "@/services/admin/get-admin-menu-items";
+import { getAdminMenuItems } from "@/services/admin/get-admin-menu-items.service";
 import type { AdminMenuItem } from "@/types/admin/menu-item.type";
 
 const columns: AdminTableColumn<AdminMenuItem>[] = [
@@ -59,15 +59,15 @@ export default async function AdminMenuItemsPage() {
   return (
     <div className="px-5 pt-4">
       <div className="mb-4 border-b border-[#E8E2D9] pb-3">
-        <h1 className="font-heading text-[16px] font-semibold leading-6 text-[#17352D]">
+        <h1 className="font-cormorant font-heading text-[16px] font-semibold leading-6 text-[#1A3C34]">
           Menu Items
         </h1>
       </div>
 
-      <div className="mb-3 flex items-center justify-between">
-        <MenuTabs value="menu-items" />
+      <div className="mb-3 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">       
+         <MenuTabs value="menu-items" />
 
-        <button className="inline-flex h-9 items-center gap-2 rounded-full bg-[#17352D] px-4 text-[14px] font-medium leading-5 tracking-[-0.15px] text-white">
+        <button className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-[#17352D] px-4 text-[14px] font-medium leading-5 tracking-[-0.15px] text-white whitespace-nowrap">
           <span className="text-[16px] leading-none">+</span>
           Add Item
         </button>

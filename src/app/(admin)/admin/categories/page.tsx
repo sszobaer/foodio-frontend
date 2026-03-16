@@ -4,7 +4,7 @@ import MenuTabs from "@/components/features/admin/menu-items/MenuTabs";
 import AdminDataTable, {
   type AdminTableColumn,
 } from "@/components/features/admin/shared/AdminDataTable";
-import { getAdminCategories } from "@/services/admin/get-admin-categories";
+import { getAdminCategories } from "@/services/admin/get-admin-categories.service";
 import type { AdminCategory } from "@/types/admin/menu-item.type";
 
 const columns: AdminTableColumn<AdminCategory>[] = [
@@ -48,10 +48,10 @@ export default async function AdminCategoriesPage() {
         </h1>
       </div>
 
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:justify-between">
         <MenuTabs value="categories" />
 
-        <button className="inline-flex h-9 items-center gap-2 rounded-full bg-[#17352D] px-4 text-[14px] font-medium leading-5 tracking-[-0.15px] text-white">
+        <button className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-[#17352D] px-4 text-[14px] font-medium leading-5 tracking-[-0.15px] text-white whitespace-nowrap">
           <span className="text-[16px] leading-none">+</span>
           Add Category
         </button>

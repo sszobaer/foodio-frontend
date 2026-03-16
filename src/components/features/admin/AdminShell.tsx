@@ -10,7 +10,7 @@ export default function AdminShell({
   return (
     <div className="flex min-h-screen w-full bg-white">
       <AdminSidebar />
-      <main className="min-w-0 flex-1 bg-white">{children}</main>
+      <main className="min-w-0 flex-1 bg-white md:ml-0">{children}</main>
     </div>
   );
 }
