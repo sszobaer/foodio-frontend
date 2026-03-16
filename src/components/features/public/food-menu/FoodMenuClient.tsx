@@ -103,7 +103,7 @@ export default function FoodMenuClient({
   );
 
   return (
-    <section className="pt-[8px] pb-[86px]">
+    <section className="mt-10 pt-[8px] pb-[86px]">
       <div className="pt-[14px] text-center">
         <h1
           className="text-[54px] leading-none tracking-[-0.04em] text-[#1A3C34]"
