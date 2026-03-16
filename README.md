@@ -110,7 +110,3 @@ npm run start
 ## Contributing
 
 Contributions are welcome. Please open issues or pull requests with a clear description of changes. If you add new environment variables, update this README with the required keys and example values.
-
-## License
-
-Specify your license here (e.g., MIT) or add a `LICENSE` file at the repo root.
