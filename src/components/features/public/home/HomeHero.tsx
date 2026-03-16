@@ -1,7 +1,10 @@
+"use client"
 import Image from "next/image";
 import { Clock3, Flame, MoveRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function HomeHero() {
+    const router = useRouter();
     return (
         <section className="relative z-0 grid h-[444px] grid-cols-[1fr_510px] overflow-visible">            <div className="px-[48px] pt-[74px]">
             <div className="inline-flex items-center rounded-full bg-[#F4EEDF] px-[11px] py-[5px] text-[10px] font-medium leading-none text-[#6E6A61]">
@@ -31,6 +34,7 @@ export default function HomeHero() {
 
             <button
                 type="button"
+                onClick={() => router.push("/food-menu")}
                 className="mt-[34px] inline-flex h-[38px] items-center gap-[8px] rounded-full bg-[#1A3C34] px-[20px] text-[13px] font-semibold text-white shadow-[0_14px_24px_rgba(26,60,52,0.18)]"
             >
                 View Menu
