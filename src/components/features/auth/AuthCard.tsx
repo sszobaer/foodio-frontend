@@ -16,11 +16,13 @@ export default function AuthCard({ mode }: AuthCardProps) {
     <div
       className="mx-auto flex flex-col items-center"
       style={{
-        width: "478px",
-        padding: "40px",
+        width: "100%",
+        maxWidth: "478px",
+        padding: "clamp(24px, 5vw, 40px)",
         borderRadius: "16px",
         border: "1px solid #E6DED2",
         background: "#FCFBF8",
+        boxSizing: "border-box",
       }}
     >
       <div className="mb-2 flex items-center gap-2">

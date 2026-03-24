@@ -11,7 +11,7 @@ export default function AuthSwitch() {
     <div
       className="grid grid-cols-2 items-center"
       style={{
-        width: "398px",
+        width: "100%",
         height: "36px",
         borderRadius: "16px",
         background: "#F4F0E8",

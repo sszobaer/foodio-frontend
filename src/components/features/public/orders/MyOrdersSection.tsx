@@ -3,7 +3,7 @@ import OrderCard from "./OrderCard";
 
 export default function MyOrdersSection({ orders }: { orders: MyOrder[] }) {
   return (
-    <section className="mx-auto w-full max-w-[1140px] px-6 pb-20 pt-14">
+    <section className="mx-auto w-full max-w-[1140px] px-6 pb-20 pt-[120px] md:pt-[140px]">
       <h1
         className="text-[48px] leading-none tracking-[-0.03em] text-[#18352F]"
         style={{ fontFamily: "var(--font-heading)" }}

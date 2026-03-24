@@ -13,7 +13,7 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
       <div
         className="flex flex-col"
         style={{
-          width: "398px",
+          width: "100%",
           minHeight: "58px",
           gap: "8px",
         }}
@@ -38,7 +38,7 @@ const AuthInput = React.forwardRef<HTMLInputElement, AuthInputProps>(
           placeholder={placeholder}
           className="outline-none"
           style={{
-            width: "398px",
+            width: "100%",
             height: "36px",
             padding: "4px 12px",
             borderRadius: "6px",

@@ -20,7 +20,7 @@ export default function FoodCard({ item }: Props) {
   const { addToCart } = useCart();
 
   return (
-    <div className="relative pt-[78px]">
+    <div className="relative pt-[78px] w-full max-w-[272px] sm:w-auto mx-auto sm:mx-0">
       <div className="absolute -left-10 -top-4 z-20">
         <div className="relative h-[158px] w-[158px] overflow-hidden rounded-full bg-white shadow-[0_10px_24px_rgba(0,0,0,0.14)]">
           <Image
@@ -33,7 +33,7 @@ export default function FoodCard({ item }: Props) {
         </div>
       </div>
 
-      <div className="relative min-h-[292px] w-[272px] rounded-bl-[34px] rounded-br-[34px] rounded-tr-[34px] bg-[#F4EEDF] pl-[30px] pr-[26px] pt-[118px]">
+      <div className="relative min-h-[292px] w-full sm:w-[272px] rounded-bl-[34px] rounded-br-[34px] rounded-tr-[34px] bg-[#F4EEDF] pl-[30px] pr-[26px] pt-[118px]">
         <h3 className="max-w-[180px] text-[20px] font-semibold leading-[1.15] text-[#222222]">
           {item.name}
         </h3>

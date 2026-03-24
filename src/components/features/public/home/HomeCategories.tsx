@@ -24,10 +24,10 @@ export default function HomeCategories({
   onSelectCategory,
 }: Props) {
   return (
-    <section className="pt-[78px]">
+    <section className="pt-[50px] lg:pt-[78px] px-4 lg:px-0">
       <div className="text-center">
         <h2
-          className="text-[31px] leading-none tracking-[-0.03em] text-[#1A3C34]"
+          className="text-[28px] md:text-[31px] leading-none tracking-[-0.03em] text-[#1A3C34]"
           style={{ fontFamily: "var(--font-playfair)" }}
         >
           Curated Categories
@@ -38,7 +38,7 @@ export default function HomeCategories({
         </p>
       </div>
 
-      <div className="mt-[26px] flex items-center justify-center gap-[14px]">
+      <div className="mt-[20px] md:mt-[26px] flex flex-wrap items-center justify-center gap-[10px] md:gap-[14px]">
         {categories.slice(0, 4).map((category) => (
           <CatCard
             key={category.id}

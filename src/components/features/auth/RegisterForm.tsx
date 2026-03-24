@@ -58,7 +58,8 @@ export default function RegisterForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col"
       style={{
-        width: "398px",
+        width: "100%",
+        maxWidth: "398px",
         gap: "16px",
       }}
     >
@@ -125,7 +126,7 @@ export default function RegisterForm() {
         type="submit"
         disabled={isSubmittingForm}
         style={{
-          width: "398px",
+          width: "100%",
           height: "36px",
           borderRadius: "56px",
           background: "#1A3C34",

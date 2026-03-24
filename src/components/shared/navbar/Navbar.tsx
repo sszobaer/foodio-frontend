@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
 import NavLink from "./NavLink";
 import CartButton from "./CartButton";
@@ -13,10 +14,28 @@ import { useCart } from "@/context/CartProvider";
 export default function Navbar() {
   const { isAuthenticated, isLoading } = useAuth();
   const { itemCount, openCart } = useCart();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full mb-10 bg-transparent">
-      <div className="mx-auto flex h-[96px] max-w-[1280px] items-center justify-between px-6">
+    <header
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-0"
+      }`}
+    >
+      <div
+        className={`mx-auto flex h-[96px] max-w-[1280px] items-center justify-between px-4 md:px-6 transition-colors duration-300 ${
+          isScrolled ? "bg-transparent" : "bg-white md:bg-transparent"
+        }`}
+      >
         <Link
           href="/"
           className="inline-flex items-center gap-2"
@@ -44,7 +63,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-6">
           <NavLink href="/" label="Home" />
           <NavLink href="/food-menu" label="Food Menu" />
           <NavLink href="/my-orders" label="My Orders" />
@@ -82,8 +101,30 @@ export default function Navbar() {
               <ArrowRight size={14} strokeWidth={2.2} color="#ffffff" />
             </Link>
           )}
+
+          <button
+            className="md:hidden flex items-center justify-center p-2 text-[#1A3C34]"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-[96px] left-0 w-full bg-white border-b border-[#EEE7DD] shadow-lg px-6 py-6 flex flex-col gap-6 z-40">
+          <div onClick={() => setIsMobileMenuOpen(false)}>
+            <NavLink href="/" label="Home" />
+          </div>
+          <div onClick={() => setIsMobileMenuOpen(false)}>
+            <NavLink href="/food-menu" label="Food Menu" />
+          </div>
+          <div onClick={() => setIsMobileMenuOpen(false)}>
+            <NavLink href="/my-orders" label="My Orders" />
+          </div>
+        </div>
+      )}
     </header>
   );
 }

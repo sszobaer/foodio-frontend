@@ -12,8 +12,8 @@ export default async function Page() {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="mx-auto max-w-[1280px] px-[48px] pt-0">
-        <HomeHero />
+      <div className="mx-auto max-w-[1280px] px-0 lg:px-[48px] pt-0 overflow-hidden lg:overflow-visible">
+        <HomeHero items={menuItems} />
         <HomeMenuSection categories={categories} items={menuItems} />
       </div>
       <Footer />

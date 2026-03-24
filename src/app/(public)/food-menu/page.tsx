@@ -39,7 +39,7 @@ export default async function FoodMenuPage({
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="mx-auto max-w-[1280px] px-[48px] pt-0">
+      <div className="mx-auto max-w-[1280px] px-4 lg:px-[48px] pt-0">
         <FoodMenuClient
           categories={categories}
           items={items}
